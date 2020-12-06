@@ -43,8 +43,8 @@
                 let cell = document.createElement("div");
                 cell.classList.add("cell")
                 cell.innerText =
-                    pattern[i *3  + j] === 1 ? "⭕️" :
-                        pattern[i *3  + j] === 2 ? "❌" : ""
+                    pattern[i * 3 + j] === 1 ? "⭕️" :
+                        pattern[i * 3 + j] === 2 ? "❌" : ""
                 cell.addEventListener("click", () => userMove(i, j));
                 board.appendChild(cell);
             }
@@ -52,8 +52,8 @@
         }
     }
 
-    function userMove(x,y) {
-        if (pattern[x*3  + y] !== 0) {
+    function userMove(x, y) {
+        if (pattern[x * 3 + y] !== 0) {
             console.log("请下在空白位置");
             return;
         }
@@ -63,42 +63,42 @@
             clear();
             return;
         }
-        color = 3- color;
+        color = 3 - color;
         show();
         computerMove();
     }
 
     function computerMove() {
-        
+
         let choice = bestChoice(pattern, color);
-        console.log("bestChoice",choice);
+        console.log("bestChoice", choice);
         if (choice.point) {
-            pattern[choice.point[0] * 3+choice.point[1]] = color;
+            pattern[choice.point[0] * 3 + choice.point[1]] = color;
         }
         if (check(pattern, color)) {
             alert(color === 1 ? "⭕️ 是胜者" : "❌ 是胜者");
             clear();
             return;
         }
-        color = 3- color;
+        color = 3 - color;
         show();
     }
 
-    
+
 
     function willWin(pattern, color) {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-               if (pattern[i *3  + j]) {
-                   continue;
-               }
-               let t = clone(pattern);
-               t[i *3  + j] = color;
-               if (check(t,color)) {
-                   return [i,j];
-               }
+                if (pattern[i * 3 + j]) {
+                    continue;
+                }
+                let t = clone(pattern);
+                t[i * 3 + j] = color;
+                if (check(t, color)) {
+                    return [i, j];
+                }
             }
-            
+
         }
         return null;
     }
@@ -106,30 +106,30 @@
     function bestChoice(pattern, color) {
         let p;
         if (p = willWin(pattern, color)) {
-           
+
             return {
                 point: p,
                 result: 1,
             }
         }
 
-        
-        
+
+
         let result = -1;
         let point = null;
         // break 两层循环 ，加一个 label
-        outer:for (let i = 0; i < 3; i++) {
+        outer: for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                if (pattern[i *3  + j]) {
+                if (pattern[i * 3 + j]) {
                     continue;
                 }
                 let t = clone(pattern);
-                t[i *3  + j] = color;
-                let r = bestChoice(t,3-color);
+                t[i * 3 + j] = color;
+                let r = bestChoice(t, 3 - color);
 
                 if (-r.result >= result) {
                     result = -r.result;
-                    point = [i,j]
+                    point = [i, j]
                 }
                 if (result == 1) {
                     break outer;
@@ -138,7 +138,7 @@
         }
         return {
             point: point,
-            result:point? result: 0,
+            result: point ? result : 0,
         }
     }
 
@@ -161,14 +161,14 @@
 
     }
 
-    
 
-    function check(pattern ,color) {
+
+    function check(pattern, color) {
         for (let i = 0; i < 3; i++) {
             let win = true;
             for (let j = 0; j < 3; j++) {
 
-                if (pattern[i *3  + j] !== color) {
+                if (pattern[i * 3 + j] !== color) {
                     win = false;
                 }
 
@@ -182,7 +182,7 @@
             let win = true;
             for (let j = 0; j < 3; j++) {
 
-                if (pattern[j*3 +i] !== color) {
+                if (pattern[j * 3 + i] !== color) {
                     win = false;
                 }
 
@@ -195,7 +195,7 @@
         {
             let win = true;
             for (let i = 0; i < 3; i++) {
-                if (pattern[i*3 +i] !== color) {
+                if (pattern[i * 3 + i] !== color) {
                     win = false;
                 }
             }
@@ -207,7 +207,7 @@
         {
             let win = true;
             for (let i = 0; i < 3; i++) {
-                if (pattern[i*3 +2 - i] !== color) {
+                if (pattern[i * 3 + 2 - i] !== color) {
                     win = false;
                 }
             }
@@ -220,6 +220,105 @@
     }
 
     show();
-    
+
+    var twoSum = function twoSum(nums, target) {
+        for (let i = 0; i < nums.length; i++) {
+            const element = nums[i];
+            for (let j = 0; j < nums.length; j++) {
+                const ele = nums[j];
+                if (i !== j) {
+                    if (element + ele === target) {
+                        return [i, j]
+                    }
+                }
+            }
+        }
+        return null;
+    };
+    console.log(twoSum([2, 7, 11, 15], 9));
+
+    var addTwoNumbers = function (l1, l2) {
+    if ((!l1 && !l2) || (l1.length === 0 && l2.length === 0)) {
+        return l1;
+    }
+    var arr1 = [];
+    var arr2 = [];
+
+    do {
+        arr1.unshift(l1.val);
+        l1 = l1.next;
+    } while (l1 != null);
+
+    do {
+        arr2.unshift(l2.val);
+        l2 = l2.next;
+    } while (l2 != null);
+    let t = 0, n = 0
+
+    do {
+        let val = (arr2[t] || 0) + (arr1[t] || 0) + n;
+        n = 0;
+        if (val > 9) {
+            n = 1;
+            val = val - 10
+        }
+        if (arr1.length > arr2.length) {
+            arr1[t] = val;
+            t = t + 1
+
+
+
+            if (t >= arr1.length && t >= arr2.length) {
+
+                break;
+            } else {
+
+            }
+
+        } else {
+            arr2[t] = val;
+            t = t + 1
+
+            if (t >= arr1.length && t >= arr2.length) {
+
+                break;
+            } else {
+
+            }
+
+        }
+
+    } while (t < arr1.length || t < arr2.length);
+    if (arr1.length > arr2.length) {
+        var list
+        var returnList;
+        arr1.forEach(function (i) {
+            if (!list) {
+                list = new ListNode(i);
+                returnList = list;
+            } else {
+                list.next = new ListNode(i);
+                list = list.next;
+            }
+        });
+        return returnList;
+    } else {
+        var list;
+        var returnList;
+        arr2.forEach(function (i) {
+            if (!list) {
+                list = new ListNode(i);
+                returnList = list;
+            } else {
+                list.next = new ListNode(i);
+                list = list.next;
+            }
+        });
+        return returnList;
+    }
+
+};
+
+    console.log("addTwoNumbers", addTwoNumbers([3,4,2], [4,6,5,1]))
 
 </script>

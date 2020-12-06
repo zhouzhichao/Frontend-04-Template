@@ -25,3 +25,9 @@
 5、二维数组变成一位数组 根据 JavaScript 原型机制，执行Object.create(pattern)，只是创建了一个新对象，以原有的 pattern 为原型，不但继承了原来pattern的方法，也继承了原来pattern的数据，新 clone 的 pattern 的生命周期短于老的 pattern ，节省很多内存空间；
 6、前端知识体系是一个需要自己不断去完善的过程，自己的前端基础知识还算挺差的，需要自己花费精力去不断学习和完善；
 7、作业和算法题啥的，要尽早做，不能拖，执行力很重要。
+
+#学号: G20200447070048
+#姓名: 周志超
+#班期: 第七期
+#小组: 4组
+#作业&总结链接: https://github.com/zhouzhichao/Frontend-04-Template/tree/master/Week_01
