@@ -84,34 +84,7 @@
         show();
     }
 
-    // function move(x, y) {
-    //     if (pattern[x*3  + y] !== 0) {
-    //         console.log("请下在空白位置");
-    //         return;
-    //     }
-    //     console.log("update");
     
-
-    //     pattern[x*3  + y] = color;
-    //     console.log("color", color);
-
-    //     show();
-
-    //     if (check(pattern,color)) {
-    //         alert(color === 1 ? "⭕️ 是胜者" : "❌ 是胜者");
-    //         clear();
-    //         return;
-    //     }
-
-    //     color = 3 - color;
-
-    //     console.log(bestChoice(pattern, color));
-
-    //     if (willWin(pattern, color)) {
-    //         console.log(color === 1 ?"⭕️ will win!" : "❌ will win!")
-    //     }
-
-    // }
 
     function willWin(pattern, color) {
         for (let i = 0; i < 3; i++) {
@@ -133,14 +106,14 @@
     function bestChoice(pattern, color) {
         let p;
         if (p = willWin(pattern, color)) {
-            console.log("point",p);
+           
             return {
                 point: p,
                 result: 1,
             }
         }
 
-        console.log("return");
+        
         
         let result = -1;
         let point = null;
@@ -179,9 +152,9 @@
 
     function clear() {
         pattern = [
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0,
         ];
         color = 1;
         show();
@@ -209,7 +182,7 @@
             let win = true;
             for (let j = 0; j < 3; j++) {
 
-                if (pattern[j][i] !== color) {
+                if (pattern[j*3 +i] !== color) {
                     win = false;
                 }
 
@@ -222,7 +195,7 @@
         {
             let win = true;
             for (let i = 0; i < 3; i++) {
-                if (pattern[i][i] !== color) {
+                if (pattern[i*3 +i] !== color) {
                     win = false;
                 }
             }
@@ -234,7 +207,7 @@
         {
             let win = true;
             for (let i = 0; i < 3; i++) {
-                if (pattern[i][2 - i] !== color) {
+                if (pattern[i*3 +2 - i] !== color) {
                     win = false;
                 }
             }
