@@ -1,6 +1,6 @@
 function kmp(source, pattern) {
     // 计算table
-    let table = new Array(pattern.length);
+    let table = new Array(pattern.length).fill(0);
     {
         let i = 1, j = 0; // j 已重复的
 
