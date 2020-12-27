@@ -1,0 +1,58 @@
+<script>
+    let $ = Symbol("$");
+    class Trie {
+
+        constructor() {
+            this.root = Object.create(null);  // 空的对象保存字典的值   在JavaScript中最合适用作保存字典树里面分支的一种数据结构，就是Object 或者是 Map，字典树里只会存字符串，所以没有它们本质区别。
+
+        }
+        // 把一个字符串插入字典树里
+        insert(word) {
+            let node = this.root;
+            for (let c of word) {
+                if (!node[c]) {
+                    node[c] = Object.create(null); // 如果子树不存在，先创建子树
+                }
+                node = node[c];
+            }
+
+            if (!($ in node)) {
+                node[$] = 0;
+            }
+            node[$] ++;
+
+        }
+        most() {
+            let max =0;
+            let maxWord = null;
+            let visit = (node, word) => {
+                if (node[$] && node[$] > max) {
+                    max = node[$];
+                    maxWord = word;
+                }
+                for (let p in node) {
+                    visit(node[p], word + p);
+                }
+            }
+            visit(this.root, "");
+            console.log(maxWord, max);
+        }
+
+    }
+
+    function randomWord(length) {
+        var s = "";
+        for (let i = 0; i < length; i++) {
+            s += String.fromCharCode(Math.random() * 26 + "a".charCodeAt(0));
+        }
+        return s;
+    }
+
+    let trie = new Trie();
+
+    for (let i = 0; i < 100000; i++) {
+        trie.insert(randomWord(4));
+        
+    }
+
+</script>
