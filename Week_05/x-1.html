@@ -1,0 +1,82 @@
+<script>
+    /**
+    4. proxy与双向绑定 | 模仿reactive实现原理（三）
+    **/
+    // let callbacks = [];
+    let callbacks = new Map();
+
+    let useReactivies = [];
+
+    /* 需要把 useReactivies 里面 存起来，利用callbacks, 这里 就不能用[]了，要用一个new Map() 来存, 因为要把 object 作为一个 key，
+        让它找到 reactivities,
+    */
+
+    let object = {
+        a: 1,
+        b: 2,
+    }
+    // let po = new Proxy(object, {
+    //     set(obj, prop, val) {
+    //         console.log(obj, prop, val);
+    //         /**
+    //          * po.a = 3
+    //             x.html:8 {a: 1, b: 2}a: 1b: 2__proto__: Object "a" 3
+    //         */
+    //     }
+    // })
+
+    let po = reactive(object);
+
+    effect(() => {
+        console.log(po.a)
+    })
+
+    function effect(callback) {
+        // callbacks.push(callback);
+        useReactivies = [];
+        callback();
+        console.log(useReactivies);
+
+        for (let reactivity of useReactivies) {
+
+            // 排除空的情况
+            if (!callbacks.has(reactivity[0])) {
+                callbacks.set(reactivity[0], new Map());
+            }
+            if (!callbacks.get(reactivity[0]).has(reactivity[1])) {
+                callbacks.get(reactivity[0]).set(reactivity[1], []);
+            }
+
+            callbacks.get(reactivity[0]).get(reactivity[1]).push(callback);
+        }
+    }
+
+    // proxy与双向绑定 | 模仿reactive实现原理（一）
+    // 基本的代理 object 的行为，并且能监听它的所有的设置属性后者改变属性的行为
+    function reactive(object) {
+        return new Proxy(object, {
+            set(obj, prop, val) {
+                obj[prop] = val
+
+                if (callbacks.get(obj)) {
+                    if (callbacks.get(obj).get(prop)) {
+                        for (let callback of callbacks.get(obj).get(prop)) {
+                            callback();
+                        }
+                    }
+                }
+
+
+                return obj[prop];
+            },
+            get(obj, prop) {
+                // console.log(obj,prop);
+                useReactivies.push([obj, prop]);
+                return obj[prop];
+            },
+        })
+    }
+
+
+
+</script>
