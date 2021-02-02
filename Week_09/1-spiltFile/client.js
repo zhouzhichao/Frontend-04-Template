@@ -230,4 +230,7 @@ void async function () { // 传一个config object
 
     // 实际上一个真正的浏览器，这个地方必须得逐段的返回response 的 body的，然后逐段的给parser
     let dom = parser.parseHTML(response.body); // 把 parser 放在单独的文件里
+
+    console.log(JSON.stringify(dom, null, "        "));
+    console.log("");
 }();
