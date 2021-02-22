@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>match 函数</title>
+</head>
+
+<body>
+    <div id="id1" class="class1">
+        <div id="id" class="class"></div>
+    </div>
+    <script>
+        function match(selector, element) {
+            let array = selector.split(' ');
+            let parentSelectors = [];
+            for (let i = 0; i < array.length; i++) {
+                parentSelectors.push(array[i].match(/(\w+)|(\.\w+)|(\#\w+)/g)); // 获取节点
+            }
+
+            let isMatched = true;
+            for (let j = parentSelectors.length - 1; j >= 0; j--) {
+                for (let i = 0; i < parentSelectors[j].length; i++) {
+                    if (parentSelectors[j][i].charAt(0) === '.') {
+                        if (!element.classList.contains(parentSelectors[j][i].slice(1))) {
+                            isMatched = false;
+                        }
+                    } else if (parentSelectors[j][i].charAt(0) === '#') {
+                        if (element.id !== parentSelectors[j][i].slice(1)) {
+                            isMatched = false;
+                        }
+                    } else {
+                        if (element.tagName !== parentSelectors[j][i].toUpperCase()) {
+                            isMatched = false;
+                        }
+                    }
+
+                }
+                element = element.parentNode;
+            }
+            return isMatched;
+        }
+
+
+        console.log(match("#id.class", document.getElementById("id"))); // true
+        console.log(match("div #id .class", document.getElementById("id"))); // false
+        console.log(match("div #id1.class", document.getElementById("id"))); // false
+    </script>
+</body>
+
+</html>
